@@ -1,0 +1,6 @@
+spark
+pyspark
+ipykernel
+pip
+aiohttp
+asyncio
