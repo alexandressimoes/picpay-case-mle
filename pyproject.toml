@@ -11,4 +11,5 @@ dependencies = [
     "pyspark>=4.2.0",
     "requests>=2.34.2",
     "spark>=0.4.1",
+    "tenacity>=9.1.4",
 ]
