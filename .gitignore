@@ -10,3 +10,5 @@ wheels/
 .venv
 
 Api_Model_Serving/app/models/*
+
+poke-spark/data/*
