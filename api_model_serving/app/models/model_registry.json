@@ -1,0 +1,7 @@
+{
+  "downloaded_models": [
+    "pt_core_news_sm",
+    "en_core_web_sm"
+  ],
+  "last_used_model": "en_core_web_sm"
+}

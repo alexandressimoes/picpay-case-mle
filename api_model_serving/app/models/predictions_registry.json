@@ -1,0 +1,41 @@
+[
+  {
+    "input": "Transfer 45 dollars to the account of John Doe.",
+    "output": {
+      "MONEY": "45 dollars",
+      "PERSON": "John Doe"
+    },
+    "model_name": "en_core_web_sm",
+    "timestamp": "2026-08-15T18:58:41.860211Z"
+  },
+  {
+    "input": "Transfer 45 dollars to the account of John Doe on september 15th, 2025",
+    "output": {
+      "MONEY": "45 dollars",
+      "PERSON": "John Doe",
+      "DATE": "september 15th, 2025"
+    },
+    "model_name": "en_core_web_sm",
+    "timestamp": "2026-08-15T19:24:19.304672Z"
+  },
+  {
+    "input": "did i Transfer 45 dollars to the account of John Doe on september 15th, 2025?",
+    "output": {
+      "MONEY": "Transfer 45 dollars",
+      "PERSON": "John Doe",
+      "DATE": "september 15th, 2025"
+    },
+    "model_name": "en_core_web_sm",
+    "timestamp": "2026-08-15T19:25:09.064975Z"
+  },
+  {
+    "input": "did i give 45 dollars to the account of John Doe on september 15th, 2025?",
+    "output": {
+      "MONEY": "45 dollars",
+      "PERSON": "John Doe",
+      "DATE": "september 15th, 2025"
+    },
+    "model_name": "en_core_web_sm",
+    "timestamp": "2026-08-15T19:25:41.594002Z"
+  }
+]
