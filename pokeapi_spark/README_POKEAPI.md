@@ -27,7 +27,7 @@ Objetivos principais:
 1. Vá para a raiz do repositório:
 
 ```bash
-cd /home/alexandre/Documents/picpay-case-mle
+cd picpay-case-mle
 ```
 
 2. Instale dependências (caso ainda não tenha feito):
@@ -39,7 +39,7 @@ uv sync
 3. Abra o notebook:
 
 ```bash
-/home/alexandre/Documents/picpay-case-mle/.venv/bin/jupyter notebook pokeapi_spark/pokemon_spark.ipynb
+jupyter notebook pokeapi_spark/pokemon_spark.ipynb
 ```
 
 4. Execute todas as células na ordem (Restart Kernel + Run All).
@@ -61,7 +61,7 @@ Esperado conter pelo menos:
 2. Verificação rápida de conteúdo JSON:
 
 ```bash
-/home/alexandre/Documents/picpay-case-mle/.venv/bin/python -c "import json; print(len(json.load(open('pokeapi_spark/data/raw/pokemon_urls_list.json'))))"
+python -c "import json; print(len(json.load(open('pokeapi_spark/data/raw/pokemon_urls_list.json'))))"
 ```
 
 3. Se o notebook gerar saídas trusted, confirme os artefatos:
