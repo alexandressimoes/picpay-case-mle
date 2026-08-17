@@ -49,7 +49,7 @@ picpay-case-mle/
 └── .pytest_cache/
 ```
 
-### Explicação das pastas
+### Descrição da estrutura
 
 - `api_model_serving/`: contém a solução principal do microserviço de model serving em FastAPI.
   - `app/`: código da aplicação, rotas, módulos e schemas.
@@ -68,7 +68,7 @@ picpay-case-mle/
 
 - `pyproject.toml`, `requirements.txt` e `uv.lock`: configuram as dependências e a execução do projeto.
 
-## Leitura recomendada
+## Leitura Necessária
 
 Para executar ou entender cada entrega, consulte primeiro os READMEs das pastas:
 - api_model_serving/README_API_MODEL_SERVING.md
