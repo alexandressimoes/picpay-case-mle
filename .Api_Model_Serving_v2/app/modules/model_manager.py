@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 class ModelManager:
-    """Gerencia ciclo de vida de modelos spaCy com metadados persistidos no MongoDB."""
+    """Manages the lifecycle of spaCy models with metadata persisted in MongoDB."""
 
     def __init__(
         self,

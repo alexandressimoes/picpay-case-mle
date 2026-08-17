@@ -9,7 +9,7 @@ from pymongo.errors import PyMongoError
 
 
 class MongoRegistryManager:
-    """Centraliza a persistencia de metadados de modelos e transacoes no MongoDB."""
+    """Centralizes the persistence of model metadata and transaction records in MongoDB."""
 
     def __init__(
         self,

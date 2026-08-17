@@ -55,6 +55,12 @@ class ModelManager:
         Downloads and loads a spaCy model. If the model is already downloaded, it will be loaded from disk.
         If the model is new, it will be downloaded, saved to disk, and registered in the registry. 
         The last used model will also be updated in the registry.
+
+        Args:
+            model_name (str): The name of the spaCy model to load.
+
+        Returns:
+            spacy.Language: The loaded spaCy model.
         """
         model_path = self.models_dir / model_name
 
@@ -79,7 +85,14 @@ class ModelManager:
         return nlp
 
     def delete_model(self, model_name: str) -> None:
-        """Removes a model from disk, memory cache, and the registry."""
+        """Removes a model from disk, memory cache, and the registry.
+
+        Args:
+            model_name (str): The name of the spaCy model to delete.
+
+        Raises:
+            ValueError: If the model is not found locally.
+        """
         with self._io_lock:
             model_path = self.models_dir / model_name
 
@@ -102,6 +115,8 @@ class ModelManager:
 
     def _save_prediction_registry(self, payload: Dict[str, Any]):
         """Register the prediction made in a JSON file.
+        Args:
+            payload (Dict[str, Any]): The prediction data to be saved.
         """
         with self._io_lock:
             if not self.predictions_registry_file.exists():
@@ -118,7 +133,18 @@ class ModelManager:
 
 
     def predict(self, text: str, model_name: str | None = None) -> dict[str, Any]:
-        """Realiza a inferência usando o modelo solicitado ou o último carregado."""
+        """Predicts named entities in the given text using the specified spaCy model or the last used model.
+
+        Args:
+            text (str): The input text for prediction.
+            model_name (str | None): The name of the spaCy model to use. If None, the last used model is used.
+
+        Returns:
+            dict[str, Any]: The prediction result containing input text, output entities, model name, and timestamp.
+
+        Raises:
+            ValueError: If no model is loaded or the specified model is not found locally.
+        """
         target_model = model_name or self.model_registry.get("last_used_model")
 
         if not target_model:
@@ -147,6 +173,11 @@ class ModelManager:
         return payload_return
 
     def list_predictions(self) -> list[dict[str, Any]]:
+        """Lists all the predictions made.
+
+        Returns:
+            list[dict[str, Any]]: A list of prediction records.
+        """
         with self._io_lock:
             if not self.predictions_registry_file.exists():
                 return []
@@ -155,6 +186,11 @@ class ModelManager:
                 return json.load(f)
 
     def get_model_registry(self) -> dict[str, Any]:
+        """Retrieves the model registry containing downloaded models and the last used model.
+
+        Returns:
+            dict[str, Any]: The model registry with downloaded models and the last used model.
+        """
         with self._io_lock:
             return {
                 "downloaded_models": list(self.model_registry.get("downloaded_models", [])),
@@ -162,18 +198,23 @@ class ModelManager:
             }
 
     async def load_model_async(self, model_name: str) -> spacy.Language:
+        """Asynchronously loads a spaCy model."""
         async with self._async_lock:
             return await asyncio.to_thread(self.load_model, model_name)
 
     async def predict_async(self, text: str, model_name: str | None = None) -> dict[str, Any]:
+        """Asynchronously performs prediction inference using the specified spaCy model or the last used model."""
         return await asyncio.to_thread(self.predict, text, model_name)
 
     async def delete_model_async(self, model_name: str) -> None:
+        """Asynchronously deletes a specific version of a registered spaCy model."""
         async with self._async_lock:
             await asyncio.to_thread(self.delete_model, model_name)
 
     async def list_predictions_async(self) -> list[dict[str, Any]]:
+        """Asynchronously lists all the predictions made."""
         return await asyncio.to_thread(self.list_predictions)
 
     async def get_model_registry_async(self) -> dict[str, Any]:
+        """Asynchronously retrieves the model registry containing downloaded models and the last used model."""
         return await asyncio.to_thread(self.get_model_registry)

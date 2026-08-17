@@ -19,8 +19,9 @@ app = FastAPI()
 
 @app.post("/load/")
 async def load_model(payload: LoadModelRequest) -> LoadModelResponse:
-    """Registra um novo modelo spaCy para ser utilizado na inferência. 
-    Caso o modelo já esteja registrado, ele será substituído pelo novo.
+    """
+    Register a new spaCy model to be used for inference. 
+    If the model is already registered, it will be replaced by the new one.
     """
     if not payload.model.strip():
         raise HTTPException(status_code=400, detail="Campo 'model' não pode ser vazio.")
@@ -33,7 +34,7 @@ async def load_model(payload: LoadModelRequest) -> LoadModelResponse:
 @app.post("/predict/", response_model=PredictResponse)
 async def predict(payload: PredictRequest) -> PredictResponse:
     """
-    Realiza inferência utilizando o modelo ativo ou uma versão específica.
+    Perform prediction inference using the active model or a specific version.
     """
     try:
         result = await model_manager.predict_async(text=payload.text, model_name=payload.model)
@@ -47,14 +48,14 @@ async def predict(payload: PredictRequest) -> PredictResponse:
 
 @app.get("/list/", response_model=ListPredictionsResponse)
 async def list_predictions() -> ListPredictionsResponse:
-    """Lista as predições realizadas."""
+    """List the predictions made."""
     predictions = await model_manager.list_predictions_async()
     return ListPredictionsResponse(predictions=predictions)
 
 
 @app.get("/list-models/", response_model=ListModelsResponse)
 async def list_models() -> ListModelsResponse:
-    """Lista os modelos spaCy baixados e o último utilizado."""
+    """List the downloaded spaCy models and the last used one."""
     model_registry = await model_manager.get_model_registry_async()
     return ListModelsResponse(
         downloaded_models=model_registry.get("downloaded_models", []),
@@ -63,12 +64,12 @@ async def list_models() -> ListModelsResponse:
 
 @app.get("/health-check/")
 async def health_check():
-    """Verifica a saúde do serviço."""
+    """Check the health of the service."""
     return {"status": "healthy"}
 
 @app.delete("/delete-model/")
 async def delete_model(model_version: str):
-    """Deleta uma versão específica de um modelo spaCy registrado."""
+    """Deletes a specific version of a registered spaCy model."""
     try:
         await model_manager.delete_model_async(model_version)
         return {"message": f"Modelo {model_version} deletado com sucesso!"}

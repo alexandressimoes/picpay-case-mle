@@ -5,7 +5,7 @@ Readme principal sobre uso da API de model serving utilizando FastAPI e spaCy. C
 1. Clone o repositório e navegue até a pasta `Api_Model_Serving`.
 
 2. Ir para a raiz do repositório
-`cd /home/alexandre/Documents/picpay-case-mle`
+`cd picpay-case-mle`
 
 3. Buildar a imagem
 ```bash
