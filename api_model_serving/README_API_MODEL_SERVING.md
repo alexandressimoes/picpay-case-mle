@@ -25,6 +25,7 @@ Objetivos principais:
 - Docker
 
 ## Execução com Docker
+Passos necessários para executar a API em container:
 
 1. Na raiz do repositório, faça o build:
 ```bash
@@ -54,7 +55,8 @@ cd picpay-case-mle
 
 2. Inicie a API:
 ```bash
-fastapi api_model_serving.app.main:app --port 8000 --workers 1
+cd api_model_serving/app
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 3. Verifique saúde:
@@ -78,7 +80,8 @@ curl -X POST http://localhost:8000/load/ \
 	-d '{"model":"en_core_web_sm"}'
 ```
 
-2. Realizar predição:
+### 3.2 Realizar predição
+
 ```bash
 curl -X POST http://localhost:8000/predict/ \
 	-H "Content-Type: application/json" \
