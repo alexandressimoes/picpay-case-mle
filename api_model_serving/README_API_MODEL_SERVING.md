@@ -22,64 +22,56 @@ Objetivos principais:
 
 - Python 3.14+
 - Dependências instaladas no ambiente (`uv sync` ou `pip install -r requirements.txt`)
-- Docker (opcional)
-
-## Execução local (sem Docker)
-
-1. Acesse a raiz do repositório:
-
-```bash
-cd /home/alexandre/Documents/picpay-case-mle
-```
-
-2. Inicie a API:
-
-```bash
-/home/alexandre/Documents/picpay-case-mle/.venv/bin/fastapi run api_model_serving/app/main.py --port 8000 --workers 1
-```
-
-3. Verifique saúde:
-
-```bash
-curl http://localhost:8000/health-check/
-```
-
-Resposta esperada:
-
-```json
-{"status":"healthy"}
-```
+- Docker
 
 ## Execução com Docker
 
 1. Na raiz do repositório, faça o build:
-
 ```bash
 docker build -f api_model_serving/Dockerfile -t picpay-model-api .
 ```
 
 2. Rode o container:
-
 ```bash
 docker run --rm -d --name picpay-model-api -p 8000:80 picpay-model-api
 ```
-
-Se tiver uma versao antiga rodando, limpe antes:
+Se tiver uma versão antiga rodando, limpe antes:
 
 ```bash
 docker rm -f picpay-model-api 2>/dev/null || true
 ```
 
 3. Pare o container ao final:
-
 ```bash
 docker stop picpay-model-api
 ```
 
+## Execução local (sem Docker)
+1. Acesse a raiz do repositório:
+```bash
+cd picpay-case-mle
+```
+
+2. Inicie a API:
+```bash
+fastapi api_model_serving.app.main:app --port 8000 --workers 1
+```
+
+3. Verifique saúde:
+```bash
+curl http://localhost:8000/health-check/
+```
+
+Resposta esperada:
+```json
+{"status":"healthy"}
+```
+
+
+
 ## Teste funcional da API (smoke test)
 
 1. Carregar modelo:
-
 ```bash
 curl -X POST http://localhost:8000/load/ \
 	-H "Content-Type: application/json" \
@@ -87,21 +79,18 @@ curl -X POST http://localhost:8000/load/ \
 ```
 
 2. Realizar predição:
-
 ```bash
 curl -X POST http://localhost:8000/predict/ \
 	-H "Content-Type: application/json" \
-	-d '{"text":"Apple announced a new product in California.","model":"en_core_web_sm"}'
+	-d '{"text":"Apple announced a new product in California costing 1000 dollars.","model":"en_core_web_sm"}'
 ```
 
 3. Listar modelos:
-
 ```bash
 curl http://localhost:8000/list-models/
 ```
 
 4. Listar predições:
-
 ```bash
 curl http://localhost:8000/list/
 ```
@@ -109,9 +98,8 @@ curl http://localhost:8000/list/
 ## Testes automatizados (pytest)
 
 Na raiz do repositório:
-
 ```bash
-/home/alexandre/Documents/picpay-case-mle/.venv/bin/python -m pytest api_model_serving/tests -q
+python -m pytest api_model_serving/tests -q
 ```
 
 Cobertura básica atual:

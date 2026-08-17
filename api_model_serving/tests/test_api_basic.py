@@ -1,7 +1,7 @@
 from unittest.mock import AsyncMock
 
 from fastapi.testclient import TestClient
-import api_model_serving.app.main as main
+import main as main
 
 
 client = TestClient(main.app)

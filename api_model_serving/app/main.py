@@ -27,7 +27,7 @@ async def load_model(payload: LoadModelRequest) -> LoadModelResponse:
     # Carrega o modelo spaCy
     await model_manager.load_model_async(payload.model)
 
-    return LoadModelResponse(message=f"Modelo {payload.model} carregado com sucesso!", model=payload.model)
+    return LoadModelResponse(message=f"Modelo {payload.model} carregado com sucesso!\n", model=payload.model)
 
 
 @app.post("/predict/", response_model=PredictResponse)
@@ -37,12 +37,12 @@ async def predict(payload: PredictRequest) -> PredictResponse:
     """
     try:
         result = await model_manager.predict_async(text=payload.text, model_name=payload.model)
-        return PredictResponse(**result)
+        return PredictResponse(message=f"Inferência realizada com sucesso. Resultado:\n {result['output']}\n", **result)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
     except Exception as exc:
         logger.exception("Erro na inferência")
-        raise HTTPException(status_code=500, detail=f"Erro na inferência: {exc}")
+        raise HTTPException(status_code=500, detail=f"Erro na inferência: {exc}\n")
 
 
 @app.get("/list/", response_model=ListPredictionsResponse)
