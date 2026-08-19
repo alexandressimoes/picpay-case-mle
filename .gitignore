@@ -11,4 +11,4 @@ wheels/
 
 api_model_serving/app/models/*
 .Api_Model_Serving_v2/app/models/*
-poke-spark/data/*
+pokeapi_spark/data/*
